@@ -5,9 +5,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 from clean_schedule import forms
-from clean_schedule.models import Group, CleanUser, TaskType
+from clean_schedule.models import Group, CleanUser, TaskType, Task
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def log_out(request):
   logout(request)
@@ -18,7 +18,7 @@ def create_schedule(request):
   # Get this users group
   group = request.user.cleanuser.group
   # Get all of the users in this group
-  users = User.objects.filter(group=group)
+  users = CleanUser.objects.filter(group=group)
   # need to find all of the task types for a group
   task_types = TaskType.objects.filter(group=group)
   # Create the schedule for the upcoming month
