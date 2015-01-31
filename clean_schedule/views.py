@@ -118,6 +118,7 @@ def view_group(request):
   return render(request, 'clean_schedule/groups/view_group.html', {'users': users })
 
 def view_sched(request):
-  my_tasks = Task.objects.filter(user = request.user)
+  my_tasks = Task.objects.filter(user = request.user.cleanuser)
+  tasks_strings = [str(t) for t in my_tasks]
 
-  return render(request, 'clean_schedule/view_sched.html', {'my_tasks': my_tasks, 'username': request.user.username})
+  return render(request, 'clean_schedule/view_sched.html', {'my_tasks': tasks_strings, 'username': request.user.username})

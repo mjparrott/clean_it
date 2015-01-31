@@ -19,3 +19,6 @@ class Task(models.Model):
   user = models.ForeignKey('CleanUser')
   done = models.BooleanField(default = 'False')
   datetime = models.DateTimeField()
+
+  def __str__(self):
+    return self.user.user.username + ": " + str(self.datetime) + ": " + str(self.done)
