@@ -9,8 +9,10 @@ from clean_schedule import forms
 def index(request):
   template = loader.get_template('clean_schedule/index.html')
   context = RequestContext(request, {})
-  user = request.user
-  return HttpResponse(template.render(context))
+  return HttpResponse(template.render(context),
+  {
+    'user': request.user
+  })
 
 def sign_up(request):
   # If this is a POST request we need to process the form data
@@ -21,8 +23,9 @@ def sign_up(request):
     if form.is_valid():
       # processs data here...
       # create the user
-      #user = User.objects.create_user(form['user_name'], form['email'], form['password'])
-      #user.save()
+      user = User.objects.create_user(form.cleaned_data['user_name'], form.cleaned_data['email'],
+        form.cleaned_data['password'])
+      user.save()
       # redirect
       return HttpResponseRedirect('/clean_schedule')
   else:
