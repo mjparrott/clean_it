@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class User(models.Model):
@@ -10,10 +11,10 @@ class Group(models.Model):
 
 class TaskType(models.Model):
   type = models.CharField(max_length = 100)
-  weight = models.IntegerField(max_value = 5, min_value = 1)
-  freq = models.IntegerField(max_value = 3, min_value = 1)
+  weight = models.IntegerField(validators = [MinValueValidator(1), MaxValueValidator(5)])
+  freq = models.IntegerField(validators = [MinValueValidator(1), MaxValueValidator(3)])
 
 class Task(models.Model):
   user = models.ForeignKey('User')
-  done = models.BooleanField()
-
+  done = models.BooleanField(default = 'False')
+  datetime = models.DateTimeField()
