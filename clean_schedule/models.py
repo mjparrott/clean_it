@@ -13,6 +13,7 @@ class TaskType(models.Model):
   type = models.CharField(max_length = 100)
   weight = models.IntegerField(validators = [MinValueValidator(1), MaxValueValidator(5)])
   freq = models.IntegerField(validators = [MinValueValidator(1), MaxValueValidator(3)])
+  group = models.ForeignKey('Group', null=True)
 
 class Task(models.Model):
   user = models.ForeignKey('CleanUser')

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
 from clean_schedule import forms
-from clean_schedule.models import Group, CleanUser, Task
+from clean_schedule.models import Group, CleanUser, TaskType
 
 # Create your views here.
 def index(request):
@@ -93,6 +93,22 @@ def add_to_group(request):
     form = forms.AddToGroupForm()
 
   return render(request, 'clean_schedule/groups/add_group.html', {'form': form})
+
+def add_task(request):
+  if request.method == 'POST':
+    form = forms.AddTaskForm(request.POST)
+    if form.is_valid():
+      task_name = form.cleaned_data['task_name']
+      weight = form.cleaned_data['weight']
+      freq = form.cleaned_data['freq']
+      group = request.user.cleanuser.group
+      t = TaskType(type=task_name, weight=weight, freq=freq, group=group)
+      t.save()
+      return HttpResponseRedirect('/')
+  else:
+    form = forms.AddTaskForm()
+    
+  return render(request, 'clean_schedule/tasks/add_task.html', {'form': form})
 
 def view_group(request):
   group = request.user.cleanuser.group

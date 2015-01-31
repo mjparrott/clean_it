@@ -14,3 +14,8 @@ class CreateGroupForm(forms.Form):
 
 class AddToGroupForm(forms.Form):
   member_name = forms.CharField(label='Member name', max_length=100)
+
+class AddTaskForm(forms.Form):
+  task_name = forms.CharField(label='Task', max_length=100)
+  weight = forms.IntegerField(label = 'Weighting', max_value = 5, min_value = 1)
+  freq = forms.IntegerField(label = 'Frequency', max_value = 3, min_value = 1, help_text = '1 = daily, 2 = weekly, 3 = monthly')
