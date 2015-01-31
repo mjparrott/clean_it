@@ -84,7 +84,7 @@ def add_to_group(request):
     form = forms.AddToGroupForm(request.POST)
     if form.is_valid():
       member_name = form.cleaned_data['member_name']
-      user = User.objects.get(username=member_name)
+      user = User.objects.filter(username=member_name)
       clean_user = user.cleanuser
       clean_user.group = request.user.cleanuser.group
       clean_user.save()
@@ -93,3 +93,10 @@ def add_to_group(request):
     form = forms.AddToGroupForm()
 
   return render(request, 'clean_schedule/groups/add_group.html', {'form': form})
+
+def view_group(request):
+  group = request.user.cleanuser.group
+  users_in_group = CleanUser.objects.filter(group=group)
+  users = map(lambda x: x.user, users_in_group)
+
+  return render(request, 'clean_schedule/groups/view_group.html', {'users': users })

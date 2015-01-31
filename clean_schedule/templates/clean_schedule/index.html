@@ -20,6 +20,7 @@
     {% if user.is_authenticated %}
       {% if user.cleanuser.group %}
         <li><a href="/groups/add_group">Add to group</a></li>
+        <li><a href="/groups/view_group">View group</a></li>
       {% else %}
         <li><a href="/groups/create_group">Create a group</a></li>
       {% endif %}
