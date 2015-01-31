@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
 from clean_schedule import forms
-from clean_schedule.models import Group, CleanUser, TaskType
+from clean_schedule.models import Group, CleanUser, TaskType, Task
 
 # Create your views here.
 def index(request):
