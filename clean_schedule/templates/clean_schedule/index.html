@@ -1,16 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <style>
+  ul.one {
+    text-align: center;
+    padding-left: 0;
+    list-style-type: none;
+    }
+  p.one {
+    font-size: large;
+    text-align: center;
+    }
+  h1.one {
+    font-size: xx-large;
+    text-align: center;
+    color: #FF0099;
+    }
+  </style>
   <title>Clean It</title>
   {% load staticfiles %}
   <link rel="stylesheet" type="text/css" href="{% static 'clean_schedule/style.css' %}" />
 </head>
 <body>
-  <h1>Clean It</h1>
+  <h1 class='one'>Clean It</h1>
   {% if user.is_authenticated %}
-    <p>Welcome {{ user.username }} </p>
+    <p class='one'>Welcome {{ user.username }}! </p>
   {% endif %}
-  <ul>
+  <ul class = 'one'>
     {% if user.is_authenticated %}
       {% if user.cleanuser.group %}
         <li><a href="/groups/add_group">Add to group</a></li>
