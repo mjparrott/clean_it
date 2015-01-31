@@ -12,6 +12,7 @@
     <li><a href="/clean_schedule/log_in">Log in</a></li>
     <li><a href="/clean_schedule/sign_up">Sign Up</a></li>
     {% if user.is_authenticated %}
+      <li><a href="/clean_schedule/groups/create_group">Create a group</a></li>
       <li><a href="/clean_schedule/schedule">View schedule</a></li>
     {% endif %}
   </ul>

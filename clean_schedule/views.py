@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
 from clean_schedule import forms
+from clean_schedule.models import Group, CleanUser
 
 # Create your views here.
 def index(request):
@@ -27,6 +28,8 @@ def sign_up(request):
       user = User.objects.create_user(form.cleaned_data['user_name'], form.cleaned_data['email'],
         form.cleaned_data['password'])
       user.save()
+      clean_user = CleanUser(user = user, group = Group())
+      clean_user.save()
       # redirect
       return HttpResponseRedirect('/clean_schedule')
   else:
@@ -57,3 +60,21 @@ def log_in(request):
 
   return render(request, 'clean_schedule/log_in.html', {'form': form})
 
+def create_group(request):
+  if request.method == 'POST':
+    form = forms.CreateGroupForm(request.POST)
+    if form.is_valid():
+      group_name = form.cleaned_data['group_name']
+      g = Group(name=group_name)
+      # also add user to the group as admin
+      g.save()
+      # update the user
+      user = request.user.cleanuser
+      
+      user.group = g
+      user.save()
+      return HttpResponseRedirect('/clean_schedule')
+  else:
+    form = forms.CreateGroupForm()
+  
+  return render(request, 'clean_schedule/create_group.html', {'form': form})
