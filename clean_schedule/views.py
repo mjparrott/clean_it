@@ -3,9 +3,12 @@ from django.template import RequestContext, loader
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.utils import timezone
 
 from clean_schedule import forms
 from clean_schedule.models import Group, CleanUser, TaskType, Task
+
+from datetime import datetime, timedelta
 
 # Create your views here.
 def index(request):
@@ -119,6 +122,19 @@ def view_group(request):
 
 def view_sched(request):
   my_tasks = Task.objects.filter(user = request.user.cleanuser)
-  tasks_strings = [str(t) for t in my_tasks]
+  my_tasks = sorted(list(my_tasks), key = lambda x: x.datetime)
+  today = timezone.now() # datetime.today().replace(tzinfo=None)
+  day_buckets = [[]] * 28
 
-  return render(request, 'clean_schedule/view_sched.html', {'my_tasks': tasks_strings, 'username': request.user.username})
+  
+  for i in range(1, 29):
+    for ind in range(len(my_tasks)):
+      if my_tasks[ind].datetime - today < timedelta(days = i) and my_tasks[ind].datetime - today > timedelta(days = i - 1):
+        day_buckets[i - 1].append(my_tasks[ind])
+        #ind -= 1
+  day_buckets = list(enumerate(day_buckets))
+  for i in range(0, 28):
+    day_buckets[i] = (day_buckets[i][0], i % 7 == 0, (i + 1) % 7 == 0, day_buckets[i][1])
+  #error = reor
+
+  return render(request, 'clean_schedule/view_sched.html', {'day_tasks': day_buckets, 'username': request.user.username})

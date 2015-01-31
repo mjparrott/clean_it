@@ -1,7 +1,18 @@
 <h1>{{ username }}</h1>
 
-<ul> 
-{% for task in my_tasks %}
-  <li>{{ task }}</li>
-{% endfor %}
-</ul>
+<table style="font-size:8px">
+  {% for day in day_tasks %}
+  {% if day.1 %}
+  <tr>
+  {% endif %}
+  <td style="font-size: 8px; width:50px; height:50px">
+  {% for task in day.3 %}
+  {{ task }}
+  {% endfor %}
+  </td>
+  {% if day.2 %}
+  </tr>
+  {% endif %}
+  {% endfor %}
+</table>
+    
