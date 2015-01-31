@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.shortcuts import render
+from django.contrib.auth.models import User
 
 from clean_schedule import forms
 
@@ -8,6 +9,7 @@ from clean_schedule import forms
 def index(request):
   template = loader.get_template('clean_schedule/index.html')
   context = RequestContext(request, {})
+  user = request.user
   return HttpResponse(template.render(context))
 
 def sign_up(request):
@@ -18,6 +20,9 @@ def sign_up(request):
     # Check whether it's valid:
     if form.is_valid():
       # processs data here...
+      # create the user
+      #user = User.objects.create_user(form['user_name'], form['email'], form['password'])
+      #user.save()
       # redirect
       return HttpResponseRedirect('/clean_schedule')
   else:
@@ -25,3 +30,4 @@ def sign_up(request):
     form = forms.SignUpForm()
 
   return render(request, 'clean_schedule/sign_up.html', {'form': form})
+
