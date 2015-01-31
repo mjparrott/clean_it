@@ -1,5 +1,13 @@
-<ul>
+<style>
+h1, ol {
+  color: purple;
+  }
+</style>
+
+<h1>{{ user.cleanuser.group.name }}</h1>
+
+<ol class = 'one'>
 {% for user in users %}
   <li>{{ user.username }}</li>
 {% endfor %}
-</ul>
+</ol>
