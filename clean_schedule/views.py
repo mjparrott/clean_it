@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 
 from clean_schedule import forms
 
@@ -42,11 +43,14 @@ def log_in(request):
     # Check whether it's valid:
     if form.is_valid():
       # processs data here...
-      # create the user
-      #user = User.objects.create_user(form['user_name'], form['email'], form['password'])
-      #user.save()
-      # redirect
-      return HttpResponseRedirect('/clean_schedule')
+      # log in the user
+      username = form.cleaned_data['user_name']
+      password = form.cleaned_data['password']
+      user = authenticate(username=username, password=password)
+      if user is not None:
+        if user.is_active:
+          login(request, user)
+          return HttpResponseRedirect('/clean_schedule')
   else:
     # create a blank form
     form = forms.LoginForm()

@@ -5,6 +5,9 @@
 </head>
 <body>
   <h1>Clean It</h1>
+  {% if user.is_authenticated %}
+    <p>Welcome {{ user.username }} </p>
+  {% endif %}
   <ul>
     <li><a href="/clean_schedule/log_in">Log in</a></li>
     <li><a href="/clean_schedule/sign_up">Sign Up</a></li>
