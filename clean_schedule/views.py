@@ -31,3 +31,22 @@ def sign_up(request):
 
   return render(request, 'clean_schedule/sign_up.html', {'form': form})
 
+def log_in(request):
+  # If this is a POST request we need to process the form data
+  if request.method == 'POST':
+    # Create a form instance and populate it with data from the request:
+    form = forms.LoginForm(request.POST)
+    # Check whether it's valid:
+    if form.is_valid():
+      # processs data here...
+      # create the user
+      #user = User.objects.create_user(form['user_name'], form['email'], form['password'])
+      #user.save()
+      # redirect
+      return HttpResponseRedirect('/clean_schedule')
+  else:
+    # create a blank form
+    form = forms.LoginForm()
+
+  return render(request, 'clean_schedule/log_in.html', {'form': form})
+
