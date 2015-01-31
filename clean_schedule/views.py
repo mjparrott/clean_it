@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
 from clean_schedule import forms
-from clean_schedule.models import Group, CleanUser
+from clean_schedule.models import Group, CleanUser, Task
 
 # Create your views here.
 def index(request):
@@ -100,3 +100,8 @@ def view_group(request):
   users = map(lambda x: x.user, users_in_group)
 
   return render(request, 'clean_schedule/groups/view_group.html', {'users': users })
+
+def view_sched(request):
+  my_tasks = Task.objects.filter(user = request.user)
+
+  return render(request, 'clean_schedule/view_sched.html', {'my_tasks': my_tasks, 'username': request.user.username})
