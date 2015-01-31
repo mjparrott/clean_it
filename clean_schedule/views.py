@@ -36,7 +36,7 @@ def sign_up(request):
     # create a blank form
     form = forms.SignUpForm()
 
-  return render(request, '/sign_up.html', {'form': form})
+  return render(request, 'clean_schedule/sign_up.html', {'form': form})
 
 def log_in(request):
   # If this is a POST request we need to process the form data
@@ -58,7 +58,7 @@ def log_in(request):
     # create a blank form
     form = forms.LoginForm()
 
-  return render(request, '/log_in.html', {'form': form})
+  return render(request, 'clean_schedule/log_in.html', {'form': form})
 
 def create_group(request):
   if request.method == 'POST':
@@ -77,4 +77,19 @@ def create_group(request):
   else:
     form = forms.CreateGroupForm()
   
-  return render(request, '/create_group.html', {'form': form})
+  return render(request, 'clean_schedule/groups/create_group.html', {'form': form})
+
+def add_to_group(request):
+  if request.method == 'POST':
+    form = forms.AddToGroupForm(request.POST)
+    if form.is_valid():
+      member_name = form.cleaned_data['member_name']
+      user = User.objects.get(username=member_name)
+      clean_user = user.cleanuser
+      clean_user.group = request.user.cleanuser.group
+      clean_user.save()
+      return HttpResponseRedirect('/')
+  else:
+    form = forms.AddToGroupForm()
+
+  return render(request, 'clean_schedule/groups/add_group.html', {'form': form})

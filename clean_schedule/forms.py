@@ -11,3 +11,6 @@ class LoginForm(forms.Form):
 
 class CreateGroupForm(forms.Form):
   group_name = forms.CharField(label='Group name', max_length=100)
+
+class AddToGroupForm(forms.Form):
+  member_name = forms.CharField(label='Member name', max_length=100)
