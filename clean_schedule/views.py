@@ -87,7 +87,7 @@ def add_to_group(request):
     form = forms.AddToGroupForm(request.POST)
     if form.is_valid():
       member_name = form.cleaned_data['member_name']
-      user = User.objects.filter(username=member_name)
+      user = User.objects.get(username=member_name)
       clean_user = user.cleanuser
       clean_user.group = request.user.cleanuser.group
       clean_user.save()
