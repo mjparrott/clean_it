@@ -15,8 +15,8 @@
       <li><a href="/log_out">Log out</a></li>
     {% else %}
       <li><a href="/log_in">Log in</a></li>
-    {% endif %}
     <li><a href="/sign_up">Sign Up</a></li>
+    {% endif %}
     {% if user.is_authenticated %}
       {% if user.cleanuser.group %}
         <li><a href="/groups/add_group">Add to group</a></li>
