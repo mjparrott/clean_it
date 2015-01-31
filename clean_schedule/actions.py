@@ -9,4 +9,4 @@ from clean_schedule.models import Group, CleanUser
 
 def log_out(request):
   logout(request)
-  return HttpResponseRedirect('/clean_schedule')
+  return HttpResponseRedirect('/')

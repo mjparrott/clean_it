@@ -31,12 +31,12 @@ def sign_up(request):
       clean_user = CleanUser(user = user, group = Group())
       clean_user.save()
       # redirect
-      return HttpResponseRedirect('/clean_schedule')
+      return HttpResponseRedirect('/')
   else:
     # create a blank form
     form = forms.SignUpForm()
 
-  return render(request, 'clean_schedule/sign_up.html', {'form': form})
+  return render(request, '/sign_up.html', {'form': form})
 
 def log_in(request):
   # If this is a POST request we need to process the form data
@@ -53,12 +53,12 @@ def log_in(request):
       if user is not None:
         if user.is_active:
           login(request, user)
-          return HttpResponseRedirect('/clean_schedule')
+          return HttpResponseRedirect('/')
   else:
     # create a blank form
     form = forms.LoginForm()
 
-  return render(request, 'clean_schedule/log_in.html', {'form': form})
+  return render(request, '/log_in.html', {'form': form})
 
 def create_group(request):
   if request.method == 'POST':
@@ -73,8 +73,8 @@ def create_group(request):
       
       user.group = g
       user.save()
-      return HttpResponseRedirect('/clean_schedule')
+      return HttpResponseRedirect('/')
   else:
     form = forms.CreateGroupForm()
   
-  return render(request, 'clean_schedule/create_group.html', {'form': form})
+  return render(request, '/create_group.html', {'form': form})
