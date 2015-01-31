@@ -21,8 +21,9 @@ def sign_up(request):
     if form.is_valid():
       # processs data here...
       # create the user
-      #user = User.objects.create_user(form['user_name'], form['email'], form['password'])
-      #user.save()
+      user = User.objects.create_user(form.cleaned_data['user_name'], form.cleaned_data['email'],
+        form.cleaned_data['password'])
+      user.save()
       # redirect
       return HttpResponseRedirect('/clean_schedule')
   else:
